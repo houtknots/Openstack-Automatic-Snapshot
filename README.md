@@ -1,2 +1,28 @@
-# Openstack-Automatic-Snapshot
-Automatic Snapshots using the Openstack Command Line Cliënt
+# Automatic snapshots for Openstack
+This scripts is made and tested within the [CloudVPS Openstack enviornment](https://cloudvps.com/openstack).
+
+## How to install the script
+Download the script:
+`curl -o /var/local/autoSnapshot.sh`
+
+Make the script executable:
+`chmod +x /var/local/autoSnapshot.sh`
+
+Add a cronjob:
+Add a cronjob to run the script at a given interval (More info at [crontab.guru](https://crontab.guru/)):
+`crontab -e`
+
+Add the following line at the bottom you can always change the time to create the snapshots at
+`0 3 * * * bash /var/local/autoSnapshot.sh`
+
+## How to include an instance via the CLI (Openstack API)
+When using the Openstack Command Line Client, enter the command below to create automatic snapshots of your instance.
+`openstack server set --property autoSnapshot=true <instance uuid>`
+
+## How to include an instance via the Openstack Dashboard (Horizon)
+1. Navigate to **Project** > **Compute** > **Instances**.
+2. Press on the small button with arrow on it to open the action menu.
+3. Within the action menu press the **Update Metadata** option.
+4. Add the metadata property **autoSnapshot** with the custom option.
+5. Enter the text **true** in the metadata property.
+6. Press the **Save** button
