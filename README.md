@@ -1,5 +1,5 @@
 # Automatic snapshots for Openstack
-This scripts is made and tested within the [CloudVPS Openstack enviornment](https://cloudvps.com/openstack).
+This scripts is made and tested within the [CloudVPS Openstack environment](https://cloudvps.com/openstack).
 
 ## How to install the script
 Download the script using the command below:
