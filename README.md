@@ -1,18 +1,33 @@
 # Automatic snapshots for Openstack
 This scripts is made and tested within the [CloudVPS Openstack environment](https://cloudvps.com/openstack).
 
+## Requirements 
+ - [Openstack Command Line Cliënt](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/)
+ - [Openstack RC File](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/#Openstack%20RC%20FILE )
+ 
 ## How to install the script
-Download the script using the command below:
+**Download the script:**
 ```
 curl -o /var/local/autoSnapshot.sh https://raw.githubusercontent.com/houtknots/Openstack-Automatic-Snapshot/main/script.sh
 ```
 
-Make the script executable:
+**Make the script executable:**
 ```
 chmod +x /var/local/autoSnapshot.sh
 ```
 
-Add a cronjob:
+**Install the Openstack RC File:**
+
+Place the [Openstack RC File](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/#Openstack%20RC%20FILE) under the directory `/var/local/` with the name `rcfile.sh`.
+
+
+If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/var/local/rcfile.sh'`.
+
+
+The default Openstack RC file asks you to enter your Openstack password. If you would like to run the scripts automated remove `read -sr OS_PASSWORD_INPUT` on line 30 and change `$OS_PASSWORD_INPUT` on line 31 to your password example: `"export OS_PASSWORD="P4$$w0rd"`.
+
+**Add a cronjob to automate the script:**
+
 Add a cronjob to run the script at a given interval begin bij opening crontab (More info at [crontab.guru](https://crontab.guru/)):
 ```
 crontab -e
