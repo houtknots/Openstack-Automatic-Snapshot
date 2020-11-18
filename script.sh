@@ -10,7 +10,7 @@
 ##########################################################
 
 # Specify where you Openstack RC File - instructions: https://www.cloudvps.com/knowledgebase/entry/2856#Openstack%20RC%20FILE
-rcFile='/var/local/openrc.sh'
+rcFile='/var/local/rcfile.sh'
 
 # Specify the amount of days before the snapshot should be removed 
 retentionDays=14
