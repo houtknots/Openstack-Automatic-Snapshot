@@ -29,7 +29,7 @@ The default Openstack RC file asks you to enter your Openstack password. If you 
 
 **Add a cronjob to automate the script:**
 
-Add a cronjob to run the script at a given interval begin bij opening crontab (More info at [crontab.guru](https://crontab.guru/)):
+Add a cronjob to run the script at a given time, start by opening crontab (More info at [crontab.guru](https://crontab.guru/)):
 ```
 crontab -e
 ```
@@ -52,3 +52,6 @@ openstack server set --property autoSnapshot=true <instance uuid>
 4. Add the metadata property **autoSnapshot** with the custom option.
 5. Enter the text **true** in the metadata property.
 6. Press the **Save** button.
+
+## Test the script
+When you have done the steps above
