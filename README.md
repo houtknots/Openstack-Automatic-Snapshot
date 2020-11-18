@@ -54,4 +54,7 @@ openstack server set --property autoSnapshot=true <instance uuid>
 6. Press the **Save** button.
 
 ## Test the script
-When you have done the steps above
+You can run the script by using the command below:
+```
+bash /var/local/autoSnapshot.sh
+```
