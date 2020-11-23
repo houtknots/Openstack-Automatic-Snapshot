@@ -9,20 +9,20 @@ This scripts is made and tested within the [CloudVPS Openstack environment](http
 ## How to install the script
 **Download the script:**
 ```
-curl -o /var/local/autoSnapshot.sh https://raw.githubusercontent.com/houtknots/Openstack-Automatic-Snapshot/main/script.sh
+curl -o /usr/local/autoSnapshot.sh https://raw.githubusercontent.com/houtknots/Openstack-Automatic-Snapshot/main/script.sh
 ```
 
 **Make the script executable:**
 ```
-chmod +x /var/local/autoSnapshot.sh
+chmod +x /usr/local/autoSnapshot.sh
 ```
 
 **Install the Openstack RC File:**
 
-Place the [Openstack RC File](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/#Openstack%20RC%20FILE) under the directory `/var/local/` with the name `rcfile.sh`.
+Place the [Openstack RC File](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/#Openstack%20RC%20FILE) under the directory `/usr/local/` with the name `rcfile.sh`.
 
 
-If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/var/local/rcfile.sh'`.
+If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/usr/local/rcfile.sh'`.
 
 
 The default Openstack RC file asks you to enter your Openstack password. If you would like to run the scripts automated remove `read -sr OS_PASSWORD_INPUT` on line 30 and change `$OS_PASSWORD_INPUT` on line 31 to your password example: `"export OS_PASSWORD="P4$$w0rd"`.
@@ -36,7 +36,7 @@ crontab -e
 
 Add the following line at the bottom of the crontab to enable daily snapshots at 3AM.
 ```
-0 3 * * * bash /var/local/autoSnapshot.sh
+0 3 * * * bash /usr/local/autoSnapshot.sh
 ```
 
 ## How to include an instance via the CLI (Openstack API)
@@ -56,5 +56,5 @@ openstack server set --property autoSnapshot=true <instance uuid>
 ## Test the script
 You can run the script by using the command below:
 ```
-bash /var/local/autoSnapshot.sh
+bash /usr/local/autoSnapshot.sh
 ```
