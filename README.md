@@ -1,6 +1,6 @@
 # Automatic snapshots for Openstack
 This script uses the Openstack API
-This scripts is made and tested within the [CloudVPS Openstack environment](https://cloudvps.com/openstack).
+This scripts is made and tested within the [CloudVPS Openstack environment](https://l.jhcs.nl/brpnFSPq).
 
 ## Requirements 
  - [Openstack Command Line Cliënt](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/)
