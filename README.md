@@ -3,8 +3,8 @@ This script uses the Openstack API
 This scripts is made and tested within the [CloudVPS Openstack environment](https://l.jhcs.nl/brpnFSPq).
 
 ## Requirements 
- - [Openstack Command Line Cliënt](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/)
- - [Openstack RC File](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/#Openstack%20RC%20FILE )
+ - [Openstack Command Line Cliënt](https://l.jhcs.nl/AALyHOQu)
+ - [Openstack RC File](https://l.jhcs.nl/daNZS33F)
  
 ## How to install the script
 **Download the script:**
@@ -19,7 +19,7 @@ chmod +x /usr/local/autoSnapshot.sh
 
 **Install the Openstack RC File:**
 
-Place the [Openstack RC File](https://www.cloudvps.com/knowledgebase/entry/2856-openstack-cli-tools-installation/#Openstack%20RC%20FILE) under the directory `/usr/local/` with the name `rcfile.sh`.
+Place the [Openstack RC File](https://l.jhcs.nl/daNZS33F) under the directory `/usr/local/` with the name `rcfile.sh`.
 
 
 If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/usr/local/rcfile.sh'`.
