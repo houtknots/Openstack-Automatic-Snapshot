@@ -48,7 +48,7 @@ for instance in $(openstack server list -c ID -f value); do
         instanceName=$(openstack server show ${instance} -c name -f value)
 
         # Check if the autoSnapshot is set to true, if this is the case create a snapshot of that instance, otherwise skip the instance.
-        if [[ $properties =~ "autoSnapshot': 'true'" ]]; then
+        if [[ $properties =~ "autoSnapshot='true'" ]]; then
             echo "Creating snapshot of instance: ${instanceName} - ${instance}"
             snapshotID=$(openstack server image create ${instance} -c id -f value --wait --name "autoSnapshot_${date}_${instanceName}" | xargs)
             openstack image set $snapshotID --tag autoSnapshot
@@ -69,7 +69,7 @@ for volume in $(openstack volume list -c ID -f value); do
 
         # Check if the autoSnapshot is set to true, if this is the case create a snapshot of that instance, otherwise skip the instance.
         if [[ $properties == *"'autoSnapshot':'true'"* ]]; then
-            echo "Creating snapshot of instance: ${volumeName} - ${volume}"
+            echo "Creating snapshot of volume: ${volumeName} - ${volume}"
             snapshotID=$(openstack volume snapshot create ${volume} -c id -f value --description "autoSnapshot_${date}_${volumeName}" | xargs)
             openstack volume snapshot set $snapshotID --property autoSnapshot=true --name "autoSnapshot_${date}_${volumeName}"
         else
