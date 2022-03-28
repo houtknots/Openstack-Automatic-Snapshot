@@ -1,6 +1,6 @@
 # Automatic snapshots for Openstack
-This script uses the Openstack API
-This scripts is made and tested within the [CloudVPS Openstack environment](https://l.jhcs.nl/brpnFSPq).
+This script uses the [Openstack CLI](https://docs.openstack.org/newton/user-guide/common/cli-install-openstack-command-line-clients.html)  
+This scripts is made and tested for and within the [CloudVPS Openstack environment](https://l.jhcs.nl/brpnFSPq) most functions will also work with other providers.
 
 ## Requirements 
  - [Openstack Command Line Client](https://l.jhcs.nl/AALyHOQu)
@@ -22,8 +22,7 @@ chmod +x /usr/local/autoSnapshot.sh
 Place the [Openstack RC File](https://l.jhcs.nl/daNZS33F) under the directory `/usr/local/` with the name `rcfile.sh`.
 
 
-If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/usr/local/rcfile.sh'`.
-
+If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/usr/local/rcfile.sh'`. You can also run the script with the path to the RC file as argument like: `/usr/local/autoSnapshot.sh /path/to/rcfile.sh`
 
 The default Openstack RC file asks you to enter your Openstack password. If you would like to run the scripts automated remove `read -sr OS_PASSWORD_INPUT` on line 30 and change `$OS_PASSWORD_INPUT` on line 31 to your password example: `"export OS_PASSWORD="P4$$w0rd"`.
 
@@ -36,13 +35,15 @@ crontab -e
 
 Add the following line at the bottom of the crontab to enable daily snapshots at 3AM.
 ```
-0 3 * * * bash /usr/local/autoSnapshot.sh
+0 3 * * * /usr/local/autoSnapshot.sh
 ```
 
 ## How to include an instance via the commandline (Openstack API)
 Use the command below to enable auto-snapshots for an instance.
 ```
 openstack server set --property autoSnapshot=true <instance uuid>
+# (Optional) Enable availability zone sync
+openstack server set --property snapshotSync=true <instance uuid>
 ```
 
 Use the command below to enable auto-snapshots for an volume.
@@ -69,5 +70,5 @@ openstack volume set --property autoSnapshot=true <volume uuid>
 ## Test the script
 Run the script by using the command below:
 ```
-bash /usr/local/autoSnapshot.sh
+/usr/local/autoSnapshot.sh
 ```
