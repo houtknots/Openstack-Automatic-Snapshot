@@ -24,7 +24,7 @@ Place the [Openstack RC File](https://l.jhcs.nl/daNZS33F) under the directory `/
 
 If you would like the change the location of the RC file, edit line 13 within the script `rcFile='/usr/local/rcfile.sh'`. You can also run the script with the path to the RC file as argument like: `/usr/local/autoSnapshot.sh /path/to/rcfile.sh`
 
-The default Openstack RC file asks you to enter your Openstack password. If you would like to run the scripts automated remove `read -sr OS_PASSWORD_INPUT` on line 30 and change `$OS_PASSWORD_INPUT` on line 31 to your password example: `"export OS_PASSWORD="P4$$w0rd"`.
+The CloudVPS default Openstack RC file asks you to enter your Openstack password. If you would like to run the scripts automated remove `read -sr OS_PASSWORD_INPUT` on line 30 and change `$OS_PASSWORD_INPUT` on line 31 to your password example: `"export OS_PASSWORD="P4$$w0rd"`.
 
 **Add a cronjob to automate the script:**
 
@@ -33,7 +33,7 @@ Add a cronjob to run the script at a given time, start by opening crontab (More 
 crontab -e
 ```
 
-Add the following line at the bottom of the crontab to enable daily snapshots at 3AM.
+Add the following line at the bottom of the crontab to enable daily snapshots at 3 AM.
 ```
 0 3 * * * /usr/local/autoSnapshot.sh
 ```
@@ -55,9 +55,10 @@ openstack volume set --property autoSnapshot=true <volume uuid>
 1. Navigate to **Project** > **Compute** > **Instances**.
 2. Press on the small button with arrow on it to open the action menu.
 3. Within the action menu press the **Update Metadata** option.
-4. Add the metadata property **autoSnapshot** with the custom option.
-5. Enter the text **true** in the metadata property.
-6. Press the **Save** button.
+4. Add the metadata property **autoSnapshot** with true as value.  
+5. (Optional) Add the metadata property **snapshotSync** with true as value if you want to enable availability zone syncing.
+6. Enter the text **true** in the metadata property.
+7. Press the **Save** button.
 
 ## How to include an volume via the Openstack Dashboard (Horizon)
 1. Navigate to **Project** > **Volumes** > **Volumes**.
