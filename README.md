@@ -55,8 +55,8 @@ openstack volume set --property autoSnapshot=true <volume uuid>
 1. Navigate to **Project** > **Compute** > **Instances**.
 2. Press on the small button with arrow on it to open the action menu.
 3. Within the action menu press the **Update Metadata** option.
-4. Add the metadata property **autoSnapshot** with true as value.  
-5. (Optional) Add the metadata property **snapshotSync** with true as value if you want to enable availability zone syncing.
+4. Add the metadata property **autoSnapshot** with **true** as value.  
+5. (Optional) Add the metadata property **snapshotSync** with **true** as value if you want to enable availability zone syncing.
 6. Enter the text **true** in the metadata property.
 7. Press the **Save** button.
 
