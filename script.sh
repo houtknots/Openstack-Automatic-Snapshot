@@ -10,13 +10,13 @@
 ##########################################################
 
 # Specify where you Openstack RC File - instructions: https://www.cloudvps.com/knowledgebase/entry/2856#Openstack%20RC%20FILE
-# use first passed variable as openstack rc file or use default
+# You can also specify the RC file location like: `./script.sh <rcfile location>`
 rcFile="${1:-/usr/local/rcfile.sh}"
 
-# Specify the amount of days before the snapshot should be removed 
+# Specify the amount of days before the snapshot should be removed
 retentionDays=14
 
-###############################    
+###############################
 # DO NOT EDIT BELOW THIS LINE #
 ###############################
 
@@ -43,38 +43,42 @@ echo "Creating instance snapshots!"
 
 # If an instance has the autoSnapshot metadata tag is true create snapshots!
 for instance in $(openstack server list -c ID -f value); do
-        # Retrieve the required info from the instance.
-        properties=$(openstack server show $instance -c properties -f value)
-        instanceName=$(openstack server show ${instance} -c name -f value)
+    # Retrieve the required info from the instance.
+    properties=$(openstack server show $instance -c properties -f value)
+    instanceName=$(openstack server show ${instance} -c name -f value)
 
-        # Check if the autoSnapshot is set to true, if this is the case create a snapshot of that instance, otherwise skip the instance.
-        if [[ $properties =~ "autoSnapshot='true'" ]]; then
-            echo "Creating snapshot of instance: ${instanceName} - ${instance}"
-            snapshotID=$(openstack server image create ${instance} -c id -f value --wait --name "autoSnapshot_${date}_${instanceName}" | xargs)
-            openstack image set $snapshotID --tag autoSnapshot
-        else
-            echo "Skipping instance! Metadata key not set: ${instanceName} - ${instance}"
+    # Check if the autoSnapshot is set to true, if this is the case create a snapshot of that instance, otherwise skip the instance.
+    if [[ $properties =~ "autoSnapshot='true'" ]]; then
+        echo "Creating snapshot of instance: ${instanceName} - ${instance}"
+        snapshotID=$(openstack server image create ${instance} -c id -f value  --name "autoSnapshot_${date}_${instanceName}" | xargs)
+        openstack image set $snapshotID --tag autoSnapshot
+        # If snapshotSync is set to true, disable image type so image will sync over all DC's
+        if [[ $properties =~ "snapshotSync='true'" ]]; then
+            openstack image unset $snapshotID --property image_type
         fi
+    else
+        echo "Skipping instance! Metadata key not set: ${instanceName} - ${instance}"
+    fi
 done
 
-# Announce snapshot creation
+# Announce volume snapshot creation
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 echo "Creating volume snapshots!"
 
 # If an instance has the autoSnapshot metadata tag is true create snapshots!
 for volume in $(openstack volume list -c ID -f value); do
-        # Retrieve the required info from the instance.
-        properties=$(openstack volume show $volume -c properties -f value | sed 's/ //g')
-        volumeName=$(openstack volume show ${volume} -c name -f value)
+    # Retrieve the required info from the instance.
+    properties=$(openstack volume show $volume -c properties -f value | sed 's/ //g')
+    volumeName=$(openstack volume show ${volume} -c name -f value)
 
-        # Check if the autoSnapshot is set to true, if this is the case create a snapshot of that instance, otherwise skip the instance.
-        if [[ $properties == *"'autoSnapshot':'true'"* ]]; then
-            echo "Creating snapshot of volume: ${volumeName} - ${volume}"
-            snapshotID=$(openstack volume snapshot create ${volume} -c id -f value --description "autoSnapshot_${date}_${volumeName}" | xargs)
-            openstack volume snapshot set $snapshotID --property autoSnapshot=true --name "autoSnapshot_${date}_${volumeName}"
-        else
-            echo "Skipping volume! Metadata key not set: ${volumeName} - ${volume}"
-        fi
+    # Check if the autoSnapshot is set to true, if this is the case create a snapshot of that instance, otherwise skip the instance.
+    if [[ $properties == *"'autoSnapshot':'true'"* ]]; then
+        echo "Creating snapshot of volume: ${volumeName} - ${volume}"
+        snapshotID=$(openstack volume snapshot create ${volume} -c id -f value --description "autoSnapshot_${date}_${volumeName}" | xargs)
+        openstack volume snapshot set $snapshotID --property autoSnapshot=true --name "autoSnapshot_${date}_${volumeName}"
+    else
+        echo "Skipping volume! Metadata key not set: ${volumeName} - ${volume}"
+    fi
 done
 
 ##########################
@@ -100,7 +104,7 @@ for image in $(openstack image list --tag autoSnapshot -f value -c ID); do
     fi
 done
 
-# Announce snapshot deletion
+# Announce volume snapshot deletion
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 echo "Deleting old volume snapshots!"
 
